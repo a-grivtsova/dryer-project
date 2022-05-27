@@ -1,0 +1,210 @@
+PROGR SCM{
+
+TACT 50;
+
+CONST TestIdling 100;
+ 
+/*Набор команд для ВОУ*/
+ENUM
+{
+	SCM2VP_INSERT_HANDS,
+	SCM2VP_TAKE_AWAY_HANDS
+};
+ 
+/*Набор команд для БВ*/
+ENUM 
+{
+	SCM2VM_FINISH_VERIFICATION
+};
+
+/*Набор команд для БУС от БВ*/
+ENUM
+{
+	VM2SCM_START_VERIFICATION
+};
+
+FUNCTION INT SendMsgToVirtualPlantCode( INT );
+FUNCTION INT SendMsgToVerificationModuleCode( INT );
+FUNCTION INT SendMsgToControlAlgorythmCode( INT );
+
+FUNCTION INT GetNextMsgFromVM( VOID );
+FUNCTION INT GetMsgCodeFromVM( VOID );
+
+PROC Init{
+
+STATE Start
+{  
+	START PROC ReceiveVMOutputMsg; 
+	STOP;
+ }
+} /* \ПРОЦ */
+
+PROC ReceiveVMOutputMsg
+{
+	INT VMMsgCode LOCAL;
+	STATE Start
+	{
+		IF (GetNextMsgFromVM()) 
+		{
+			VMMsgCode = GetMsgCodeFromVM();
+			SWITCH (VMMsgCode)
+			{
+				CASE VM2SCM_START_VERIFICATION:
+					START PROC TestDriver;
+					BREAK;
+				DEFAULT:
+					BREAK;
+			}
+		}
+		LOOP;
+	}
+} 
+
+
+PROC TestDriver
+{
+	STATE RunTestHandsUnderDryer1
+	{
+		START PROC TestHandsUnderDryer;
+		SET NEXT;
+	}
+	STATE IdilingTest1
+	{
+		TIMEOUT TestIdling SET NEXT;		
+	}
+	STATE RunTestRemoveHands1
+	{
+		START PROC TestRemoveHands;
+		SET NEXT;
+	}
+	STATE IdilingTest2
+	{
+		TIMEOUT TestIdling SET NEXT;	
+	}
+	STATE RunTestHandsUnderDryer2
+	{
+		START PROC TestHandsUnderDryer;
+		SET NEXT;
+	}
+	STATE IdilingTest3
+	{
+		TIMEOUT TestIdling SET NEXT;		
+	}
+	STATE RunTestRemoveHands2
+	{
+		START PROC TestRemoveHands;
+		SET NEXT;
+	}
+	STATE IdilingTest4
+	{
+		TIMEOUT TestIdling SET NEXT;	
+	}
+	STATE RunTestHandsUnderDryer3
+	{
+		START PROC TestHandsUnderDryer;
+		SET NEXT;
+	}
+	STATE IdilingTest5
+	{
+		TIMEOUT TestIdling SET NEXT;		
+	}
+	STATE RunTestRemoveHands3
+	{
+		START PROC TestRemoveHands;
+		SET NEXT;
+	}
+	STATE IdilingTest6
+	{
+		TIMEOUT TestIdling SET NEXT;	
+	}
+	STATE RunTestHandsUnderDryer4
+	{
+		START PROC TestHandsUnderDryer;
+		SET NEXT;
+	}
+	STATE IdilingTest7
+	{
+		TIMEOUT TestIdling SET NEXT;		
+	}
+	STATE RunTestRemoveHands4
+	{
+		START PROC TestRemoveHands;
+		SET NEXT;
+	}
+	STATE IdilingTest8
+	{
+		TIMEOUT TestIdling SET NEXT;	
+	}
+	STATE RunTestHandsUnderDryer5
+	{
+		START PROC TestHandsUnderDryer;
+		SET NEXT;
+	}
+	STATE IdilingTest9
+	{
+		TIMEOUT TestIdling SET NEXT;		
+	}
+	STATE RunTestRemoveHands5
+	{
+		START PROC TestRemoveHands;
+		SET NEXT;
+	}
+	STATE IdilingTest10
+	{
+		TIMEOUT TestIdling SET NEXT;	
+	}
+	STATE RunTestHandsUnderDryer6
+	{
+		START PROC TestHandsUnderDryer;
+		SET NEXT;
+	}
+	STATE IdilingTest11
+	{
+		TIMEOUT TestIdling SET NEXT;		
+	}
+	STATE RunTestRemoveHands6
+	{
+		START PROC TestRemoveHands;
+		SET NEXT;
+	}
+	STATE IdilingTest12
+	{
+		TIMEOUT TestIdling SET NEXT;	
+	}
+	STATE Finish
+	{
+		SendMsgToVerificationModuleCode(SCM2VM_FINISH_VERIFICATION);
+		STOP;
+	}
+}
+
+PROC TestHandsUnderDryer
+{
+	STATE Start
+	{
+		SendMsgToVirtualPlantCode(SCM2VP_INSERT_HANDS);
+		SET NEXT;
+	}
+	STATE Idiling
+	{
+		LOOP;
+	}
+}
+
+PROC TestRemoveHands
+{
+	STATE Start
+	{
+		SendMsgToVirtualPlantCode(SCM2VP_TAKE_AWAY_HANDS);
+		SET NEXT;
+	}
+	STATE Idiling
+	{
+		LOOP;
+	}
+}
+
+}  /* \Прогр */
+
+
+

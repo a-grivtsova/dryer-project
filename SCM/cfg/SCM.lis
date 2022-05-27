@@ -1,0 +1,212 @@
+    1          PROGR SCM{
+    2          
+    3          TACT 50;
+    4          
+    5          CONST TestIdling 100;
+    6           
+    7          /*Набор команд для ВОУ*/
+    8          ENUM
+    9          {
+   10          	SCM2VP_INSERT_HANDS,
+   11          	SCM2VP_TAKE_AWAY_HANDS
+   12          };
+   13           
+   14          /*Набор команд для БВ*/
+   15          ENUM 
+   16          {
+   17          	SCM2VM_FINISH_VERIFICATION
+   18          };
+   19          
+   20          /*Набор команд для БУС от БВ*/
+   21          ENUM
+   22          {
+   23          	VM2SCM_START_VERIFICATION
+   24          };
+   25          
+   26          FUNCTION INT SendMsgToVirtualPlantCode( INT );
+   27          FUNCTION INT SendMsgToVerificationModuleCode( INT );
+   28          FUNCTION INT SendMsgToControlAlgorythmCode( INT );
+   29          
+   30          FUNCTION INT GetNextMsgFromVM( VOID );
+   31          FUNCTION INT GetMsgCodeFromVM( VOID );
+   32          
+   33          PROC Init{
+   34          
+   35          STATE Start
+   36          {  
+   37          	START PROC ReceiveVMOutputMsg; 
+   38          	STOP;
+   39           }
+   40          } /* \ПРОЦ */
+   41          
+   42          PROC ReceiveVMOutputMsg
+   43          {
+   44          	INT VMMsgCode LOCAL;
+   45          	STATE Start
+   46          	{
+   47          		IF (GetNextMsgFromVM()) 
+   48          		{
+   49          			VMMsgCode = GetMsgCodeFromVM();
+   50          			SWITCH (VMMsgCode)
+   51          			{
+   52          				CASE VM2SCM_START_VERIFICATION:
+   53          					START PROC TestDriver;
+   54          					BREAK;
+   55          				DEFAULT:
+   56          					BREAK;
+   57          			}
+   58          		}
+   59          		LOOP;
+   60          	}
+   61          } 
+   62          
+   63          
+   64          PROC TestDriver
+   65          {
+   66          	STATE RunTestHandsUnderDryer1
+   67          	{
+   68          		START PROC TestHandsUnderDryer;
+   69          		SET NEXT;
+   70          	}
+   71          	STATE IdilingTest1
+   72          	{
+   73          		TIMEOUT TestIdling SET NEXT;		
+   74          	}
+   75          	STATE RunTestRemoveHands1
+   76          	{
+   77          		START PROC TestRemoveHands;
+   78          		SET NEXT;
+   79          	}
+   80          	STATE IdilingTest2
+   81          	{
+   82          		TIMEOUT TestIdling SET NEXT;	
+   83          	}
+   84          	STATE RunTestHandsUnderDryer2
+   85          	{
+   86          		START PROC TestHandsUnderDryer;
+   87          		SET NEXT;
+   88          	}
+   89          	STATE IdilingTest3
+   90          	{
+   91          		TIMEOUT TestIdling SET NEXT;		
+   92          	}
+   93          	STATE RunTestRemoveHands2
+   94          	{
+   95          		START PROC TestRemoveHands;
+   96          		SET NEXT;
+   97          	}
+   98          	STATE IdilingTest4
+   99          	{
+  100          		TIMEOUT TestIdling SET NEXT;	
+  101          	}
+  102          	STATE RunTestHandsUnderDryer3
+  103          	{
+  104          		START PROC TestHandsUnderDryer;
+  105          		SET NEXT;
+  106          	}
+  107          	STATE IdilingTest5
+  108          	{
+  109          		TIMEOUT TestIdling SET NEXT;		
+  110          	}
+  111          	STATE RunTestRemoveHands3
+  112          	{
+  113          		START PROC TestRemoveHands;
+  114          		SET NEXT;
+  115          	}
+  116          	STATE IdilingTest6
+  117          	{
+  118          		TIMEOUT TestIdling SET NEXT;	
+  119          	}
+  120          	STATE RunTestHandsUnderDryer4
+  121          	{
+  122          		START PROC TestHandsUnderDryer;
+  123          		SET NEXT;
+  124          	}
+  125          	STATE IdilingTest7
+  126          	{
+  127          		TIMEOUT TestIdling SET NEXT;		
+  128          	}
+  129          	STATE RunTestRemoveHands4
+  130          	{
+  131          		START PROC TestRemoveHands;
+  132          		SET NEXT;
+  133          	}
+  134          	STATE IdilingTest8
+  135          	{
+  136          		TIMEOUT TestIdling SET NEXT;	
+  137          	}
+  138          	STATE RunTestHandsUnderDryer5
+  139          	{
+  140          		START PROC TestHandsUnderDryer;
+  141          		SET NEXT;
+  142          	}
+  143          	STATE IdilingTest9
+  144          	{
+  145          		TIMEOUT TestIdling SET NEXT;		
+  146          	}
+  147          	STATE RunTestRemoveHands5
+  148          	{
+  149          		START PROC TestRemoveHands;
+  150          		SET NEXT;
+  151          	}
+  152          	STATE IdilingTest10
+  153          	{
+  154          		TIMEOUT TestIdling SET NEXT;	
+  155          	}
+  156          	STATE RunTestHandsUnderDryer6
+  157          	{
+  158          		START PROC TestHandsUnderDryer;
+  159          		SET NEXT;
+  160          	}
+  161          	STATE IdilingTest11
+  162          	{
+  163          		TIMEOUT TestIdling SET NEXT;		
+  164          	}
+  165          	STATE RunTestRemoveHands6
+  166          	{
+  167          		START PROC TestRemoveHands;
+  168          		SET NEXT;
+  169          	}
+  170          	STATE IdilingTest12
+  171          	{
+  172          		TIMEOUT TestIdling SET NEXT;	
+  173          	}
+  174          	STATE Finish
+  175          	{
+  176          		SendMsgToVerificationModuleCode(SCM2VM_FINISH_VERIFICATION);
+  177          		STOP;
+  178          	}
+  179          }
+  180          
+  181          PROC TestHandsUnderDryer
+  182          {
+  183          	STATE Start
+  184          	{
+  185          		SendMsgToVirtualPlantCode(SCM2VP_INSERT_HANDS);
+  186          		SET NEXT;
+  187          	}
+  188          	STATE Idiling
+  189          	{
+  190          		LOOP;
+  191          	}
+  192          }
+  193          
+  194          PROC TestRemoveHands
+  195          {
+  196          	STATE Start
+  197          	{
+  198          		SendMsgToVirtualPlantCode(SCM2VP_TAKE_AWAY_HANDS);
+  199          		SET NEXT;
+  200          	}
+  201          	STATE Idiling
+  202          	{
+  203          		LOOP;
+  204          	}
+  205          }
+  206          
+  207          }  /* \Прогр */
+
+%RCSL-I-SUMMARY, Completed with 0 error(s).
+%RCSL-I-SUMMARY, Completed with 0 warning(s).
+
+ %RCSL-I-SUMMARY, Completed with 0 error(s).

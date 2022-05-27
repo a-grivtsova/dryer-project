@@ -1,0 +1,57 @@
+
+/* йнмярюмрш */
+ хлъ йнмярюмрш: TestIdling,  гмювемхе: ,    кнц.хлъ: C_0
+ хлъ йнмярюмрш: SCM2VP_INSERT_HANDS,  гмювемхе: ,    кнц.хлъ: C_1
+ хлъ йнмярюмрш: SCM2VP_TAKE_AWAY_HANDS,  гмювемхе: ,    кнц.хлъ: C_2
+ хлъ йнмярюмрш: SCM2VM_FINISH_VERIFICATION,  гмювемхе: ,    кнц.хлъ: C_3
+ хлъ йнмярюмрш: VM2SCM_START_VERIFICATION,  гмювемхе: ,    кнц.хлъ: C_4
+/*= онпрш =*/
+/*======================== опнжеяяш =============================*/
+### хлъ опнжеяяю: Init, кнц. хлъ : P0
+###### янярнъмхъ опнжеяю: 
+      хлъ янярнъмхъ: Start,    кнц.хлъ: P0S0
+### хлъ опнжеяяю: ReceiveVMOutputMsg, кнц. хлъ : P1
+###### янярнъмхъ опнжеяю: 
+      хлъ янярнъмхъ: Start,    кнц.хлъ: P1S0
+### хлъ опнжеяяю: TestDriver, кнц. хлъ : P2
+###### янярнъмхъ опнжеяю: 
+      хлъ янярнъмхъ: RunTestHandsUnderDryer1,    кнц.хлъ: P2S0
+      хлъ янярнъмхъ: IdilingTest1,    кнц.хлъ: P2S1
+      хлъ янярнъмхъ: RunTestRemoveHands1,    кнц.хлъ: P2S2
+      хлъ янярнъмхъ: IdilingTest2,    кнц.хлъ: P2S3
+      хлъ янярнъмхъ: RunTestHandsUnderDryer2,    кнц.хлъ: P2S4
+      хлъ янярнъмхъ: IdilingTest3,    кнц.хлъ: P2S5
+      хлъ янярнъмхъ: RunTestRemoveHands2,    кнц.хлъ: P2S6
+      хлъ янярнъмхъ: IdilingTest4,    кнц.хлъ: P2S7
+      хлъ янярнъмхъ: RunTestHandsUnderDryer3,    кнц.хлъ: P2S8
+      хлъ янярнъмхъ: IdilingTest5,    кнц.хлъ: P2S9
+      хлъ янярнъмхъ: RunTestRemoveHands3,    кнц.хлъ: P2S10
+      хлъ янярнъмхъ: IdilingTest6,    кнц.хлъ: P2S11
+      хлъ янярнъмхъ: RunTestHandsUnderDryer4,    кнц.хлъ: P2S12
+      хлъ янярнъмхъ: IdilingTest7,    кнц.хлъ: P2S13
+      хлъ янярнъмхъ: RunTestRemoveHands4,    кнц.хлъ: P2S14
+      хлъ янярнъмхъ: IdilingTest8,    кнц.хлъ: P2S15
+      хлъ янярнъмхъ: RunTestHandsUnderDryer5,    кнц.хлъ: P2S16
+      хлъ янярнъмхъ: IdilingTest9,    кнц.хлъ: P2S17
+      хлъ янярнъмхъ: RunTestRemoveHands5,    кнц.хлъ: P2S18
+      хлъ янярнъмхъ: IdilingTest10,    кнц.хлъ: P2S19
+      хлъ янярнъмхъ: RunTestHandsUnderDryer6,    кнц.хлъ: P2S20
+      хлъ янярнъмхъ: IdilingTest11,    кнц.хлъ: P2S21
+      хлъ янярнъмхъ: RunTestRemoveHands6,    кнц.хлъ: P2S22
+      хлъ янярнъмхъ: IdilingTest12,    кнц.хлъ: P2S23
+      хлъ янярнъмхъ: Finish,    кнц.хлъ: P2S24
+### хлъ опнжеяяю: TestHandsUnderDryer, кнц. хлъ : P3
+###### янярнъмхъ опнжеяю: 
+      хлъ янярнъмхъ: Start,    кнц.хлъ: P3S0
+      хлъ янярнъмхъ: Idiling,    кнц.хлъ: P3S1
+### хлъ опнжеяяю: TestRemoveHands, кнц. хлъ : P4
+###### янярнъмхъ опнжеяю: 
+      хлъ янярнъмхъ: Start,    кнц.хлъ: P4S0
+      хлъ янярнъмхъ: Idiling,    кнц.хлъ: P4S1
+/*======================= оепелеммше ============================*/
+
+ хлъ оепелеммни: VMMsgCode,	кнц.хлъ: P1V0
+ рхо: Integer
+ рюакхжю тхг. напюгю:
+ мЕР тХГХВЕЯЙНЦН нАПЮГЮ.
+ дНЯРСОМЮ РНКЭЙН ХГ ОПНЖЕЯЯЮ ReceiveVMOutputMsg

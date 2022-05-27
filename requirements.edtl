@@ -1,0 +1,54 @@
+VAR_INPUT
+	INPUT_PORTS_COUNTER := 1;           
+	H AT %IB0.0: BOOL;   
+END_VAR
+
+VAR_OUTPUT
+	OUTPUT_PORTS_COUNTER := 1;                   
+	D AT %QB1.0: BOOL;  
+END_VAR     
+
+REQ requirement1
+ TRIGGER := D AND FE H;    
+ INVARIANT := D;  
+ FINAL := TAU(#T1s); 
+ DELAY := TAU(#T10ms);
+ REACTION := NOT D;
+ RELEASE := H;
+END_REQ   
+ 
+REQ requirement2
+ TRIGGER := RE H AND NOT D;           
+ INVARIANT := 1;  
+ FINAL := 1;          
+ DELAY := 1;    
+ REACTION := D;     
+ RELEASE := 0;  
+END_REQ 
+
+REQ requirement3 
+ TRIGGER := H AND D;    
+ INVARIANT := D;  
+ FINAL := NOT H; 
+ DELAY := 1;
+ REACTION := 1;
+ RELEASE := 0;
+END_REQ
+
+REQ requirement4
+ TRIGGER := NOT H AND NOT D;        
+ INVARIANT := 1;   
+ FINAL := 1; 
+ DELAY := 1;
+ REACTION := NOT D;
+ RELEASE := 0;
+END_REQ 
+
+REQ requirement5
+ TRIGGER := RE D;    
+ INVARIANT := 1;  
+ FINAL := TAU(#T1h); 
+ DELAY := 1;
+ REACTION := NOT D;
+ RELEASE := NOT D;
+END_REQ
